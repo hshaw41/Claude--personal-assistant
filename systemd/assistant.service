@@ -1,0 +1,18 @@
+[Unit]
+Description=Always-On Personal AI Assistant
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=assistant
+WorkingDirectory=/home/assistant/always-on-assistant
+EnvironmentFile=/home/assistant/always-on-assistant/.env
+ExecStart=/usr/bin/node dist/index.js
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
