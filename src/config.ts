@@ -32,7 +32,7 @@ function parseIdList(raw: string | undefined): Set<number> {
 
 export const config = {
   telegramBotToken: required("TELEGRAM_BOT_TOKEN"),
-  anthropicApiKey: required("ANTHROPIC_API_KEY"),
+  anthropicApiKey: process.env.ANTHROPIC_API_KEY,
   allowedUserIds: parseIdList(process.env.ALLOWED_USER_IDS),
   ownerChatId: process.env.OWNER_CHAT_ID ? Number(process.env.OWNER_CHAT_ID) : undefined,
   logLevel: process.env.LOG_LEVEL ?? "info",

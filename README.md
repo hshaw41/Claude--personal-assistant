@@ -51,7 +51,17 @@ echo 'assistant ALL=(ALL) NOPASSWD: /bin/systemctl restart assistant, /bin/syste
 sudo chmod 440 /etc/sudoers.d/assistant
 ```
 
-### 3. Configure `.env` on the VPS
+### 3. Authenticate Claude (pick one)
+
+**Option A — Claude Pro/Max subscription (recommended if you have one):**
+```bash
+sudo -iu assistant claude login
+```
+Open the URL it prints on your phone, sign in, paste the code back. Subject to your plan's weekly usage caps.
+
+**Option B — Anthropic API key (pay-per-use):** get one from https://console.anthropic.com/ and set it as `ANTHROPIC_API_KEY` in `.env` below.
+
+### 4. Configure `.env` on the VPS
 
 ```bash
 sudo -iu assistant bash -lc 'cd ~/always-on-assistant && cp .env.example .env && nano .env'
@@ -60,11 +70,11 @@ sudo -iu assistant bash -lc 'cd ~/always-on-assistant && cp .env.example .env &&
 Fill in:
 
 - `TELEGRAM_BOT_TOKEN` — from BotFather
-- `ANTHROPIC_API_KEY` — from https://console.anthropic.com/
+- `ANTHROPIC_API_KEY` — leave blank if you used Option A; set if you used Option B
 - `ALLOWED_USER_IDS` — your numeric user ID from @userinfobot (comma-separated for multiple)
 - `OWNER_CHAT_ID` — usually same as your user ID; gets deploy notifications and crash alerts
 
-### 4. Install the systemd service
+### 5. Install the systemd service
 
 ```bash
 sudo cp /home/assistant/always-on-assistant/systemd/assistant.service /etc/systemd/system/
@@ -75,7 +85,7 @@ sudo systemctl status assistant
 
 You should now be able to message the bot on Telegram and get a reply.
 
-### 5. Wire up GitHub Actions auto-deploy
+### 6. Wire up GitHub Actions auto-deploy
 
 Add these secrets to the repo (GitHub mobile web → Settings → Secrets and variables → Actions):
 
