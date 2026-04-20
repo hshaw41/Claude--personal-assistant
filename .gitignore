@@ -5,3 +5,8 @@ data/
 .env.local
 *.log
 .DS_Store
+
+# Godot (game/)
+game/.godot/
+game/.import/
+game/export_presets.cfg
